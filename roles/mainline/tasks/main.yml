@@ -23,14 +23,14 @@
 
 - name: Remove old repository entry
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/cappelikan.gpg] http://ppa.launchpad.net/cappelikan/ppa/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    repo: "deb [arch=arm64 signed-by=/usr/share/keyrings/cappelikan.gpg] http://ppa.launchpad.net/cappelikan/ppa/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
     filename: "cappelikan"
     update_cache: true
     state: absent
 
 - name: Add cappelikan/ppa repository
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/cappelikan.asc] http://ppa.launchpad.net/cappelikan/ppa/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    repo: "deb [arch=arm64 signed-by=/etc/apt/trusted.gpg.d/cappelikan.asc] http://ppa.launchpad.net/cappelikan/ppa/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
     filename: "cappelikan"
     state: present
     update_cache: true

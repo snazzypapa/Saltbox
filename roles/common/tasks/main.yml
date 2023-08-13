@@ -57,20 +57,15 @@
       - software-properties-common
 
 - name: Add Ubuntu repositories
-  ansible.builtin.apt_repository:
-    repo: "{{ item }}"
-    state: present
-    update_cache: true
+  shell: "add-apt-repository -y {{ item }}"
   with_items:
-    - 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse'
-    - 'deb-src http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} multiverse'
-    - 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }}-updates multiverse'
-    - 'deb-src http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }}-updates multiverse'
+    - multiverse
   when: (ansible_distribution == 'Ubuntu') and (not continuous_integration)
-
+  
 - name: Install common packages
   ansible.builtin.apt:
     state: present
+    update_cache: true
     name:
       - "nano"
       - "zip"
@@ -97,7 +92,6 @@
       - "tmux"
       - "apache2-utils"
       - "jq"
-      - "lib32z1"
       - "moreutils"
       - "unrar"
       - "python3-virtualenv"
