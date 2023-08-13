@@ -142,7 +142,7 @@ plex_docker_container: "{{ plex_name }}"
 
 # Image
 plex_docker_image_pull: true
-plex_docker_image_repo: "plexinc/pms-docker"
+plex_docker_image_repo: "lscr.io/linuxserver/plex"
 plex_docker_image_tag: "latest"
 plex_docker_image: "{{ lookup('vars', plex_name + '_docker_image_repo', default=plex_docker_image_repo)
                        + ':' + lookup('vars', plex_name + '_docker_image_tag', default=plex_docker_image_tag) }}"
@@ -187,6 +187,9 @@ plex_docker_envs_default:
   NVIDIA_VISIBLE_DEVICES: "{{ 'all' if (gpu.nvidia) | default(false) else omit }}"
   TZ: "{{ tz }}"
   ADVERTISE_IP: "{{ plex_docker_envs_advertise_ip }}"
+  VERSION: "docker" # added for linuxserver.io image
+  PUID: "{{ uid }}" # added for linuxserver.io image
+  PGID: "{{ gid }}" # added for linuxserver.io image
 plex_docker_envs_custom: {}
 plex_docker_envs: "{{ lookup('vars', plex_name + '_docker_envs_default', default=plex_docker_envs_default)
                       | combine(lookup('vars', plex_name + '_docker_envs_custom', default=plex_docker_envs_custom)) }}"
